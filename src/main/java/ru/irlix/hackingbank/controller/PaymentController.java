@@ -1,13 +1,12 @@
 package ru.irlix.hackingbank.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import ru.irlix.hackingbank.model.Payment;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import ru.irlix.hackingbank.dto.PaymentDTO;
 import ru.irlix.hackingbank.service.ClientService;
 import ru.irlix.hackingbank.service.PaymentService;
 
@@ -29,19 +28,23 @@ public class PaymentController {
     @GetMapping("/new")
     public String showNewForm(Model model) {
         model.addAttribute("clients", clientService.getAll());
-        model.addAttribute("payment", new Payment());
+        model.addAttribute("payment", new PaymentDTO());
         return "paymentAdd";
     }
 
     @PostMapping
-    public String createPayment(@RequestParam Long senderId, @RequestParam Long recipientId,
-                                @RequestParam Double amount, @RequestParam String message, Model model) {
-        try {
-            paymentService.createPayment(senderId, recipientId, amount, message);
-            return "redirect:/payments";
-        } catch (RuntimeException e) {
+    public String create(@ModelAttribute("payment") @Valid PaymentDTO paymentDTO,
+                         BindingResult result,
+                         Model model) {
+        if (result.hasErrors()) {
             model.addAttribute("clients", clientService.getAll());
             return "paymentAdd";
         }
+        paymentService.createPaymentDTO(
+                paymentDTO.getSender_id(),
+                paymentDTO.getRecipient_id(),
+                paymentDTO.getAmount(),
+                paymentDTO.getMessage());
+        return "redirect:/payments";
     }
 }

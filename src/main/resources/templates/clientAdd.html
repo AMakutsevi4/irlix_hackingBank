@@ -26,23 +26,23 @@
         <div class="form-group">
             <label for="name">Имя:</label>
             <input type="text" class="form-control" id="name" th:field="*{name}">
-<!--            <div th:if="${#fields.hasErrors('name')}" class="text-danger">-->
-<!--                <p th:each="err : ${#fields.errors('name')}" th:text="${err}"></p>-->
-<!--            </div>-->
+            <div th:if="${#fields.hasErrors('name')}" class="text-danger">
+                <p th:each="err : ${#fields.errors('name')}" th:text="${err}"></p>
+            </div>
         </div>
         <div class="form-group">
             <label for="phone_number">Телефонный номер:</label>
             <input type="text" class="form-control" id="phone_number" th:field="*{phone_number}">
-<!--            <div th:if="${#fields.hasErrors('phone_number')}" class="text-danger">-->
-<!--                <p th:each="err : ${#fields.errors('phone_number')}" th:text="${err}"></p>-->
-<!--            </div>-->
+            <div th:if="${#fields.hasErrors('phone_number')}" class="text-danger">
+                <p th:each="err : ${#fields.errors('phone_number')}" th:text="${err}"></p>
+            </div>
         </div>
         <div class="form-group">
             <label for="balance">Баланс:</label>
             <input type="text" class="form-control" id="balance" th:field="*{balance}">
-<!--            <div th:if="${#fields.hasErrors('balance')}" class="text-danger">-->
-<!--                <p th:each="err : ${#fields.errors('balance')}" th:text="${err}"></p>-->
-<!--            </div>-->
+            <div th:if="${#fields.hasErrors('balance')}" class="text-danger">
+                <p th:each="err : ${#fields.errors('balance')}" th:text="${err}"></p>
+            </div>
         </div>
         <button type="submit" class="btn btn-primary">Сохранить</button>
     </form>

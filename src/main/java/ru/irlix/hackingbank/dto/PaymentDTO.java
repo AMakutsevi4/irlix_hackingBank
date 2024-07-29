@@ -1,6 +1,7 @@
-package ru.irlix.hackingbank.model;
+package ru.irlix.hackingbank.dto;
 
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,12 +14,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table("payments")
-public class Payment {
+public class PaymentDTO {
     @Id
     private Long id;
-    @DecimalMin(value = "0.01", message = "Сумма должна быть больше нуля")
     private LocalDateTime date_time;
-    private double amount;
+    @NotNull
+    @DecimalMin(value = "0.1", message = "Сумма должна быть больше нуля")
+    private Double amount;
     private Long sender_id;
     private Long recipient_id;
     private String message;

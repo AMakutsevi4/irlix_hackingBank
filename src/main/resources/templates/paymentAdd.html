@@ -24,19 +24,22 @@
     <form th:action="@{/payments}" method="post" th:object="${payment}">
         <div class="form-group">
             <label for="senderId">Отправитель:</label>
-            <select class="form-control" id="senderId" name="senderId">
+            <select id="senderId" name="sender_id" class="form-control" th:field="*{sender_id}" required>
                 <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.name}"></option>
             </select>
         </div>
         <div class="form-group">
             <label for="recipientId">Получатель:</label>
-            <select class="form-control" id="recipientId" name="recipientId">
+            <select id="recipientId" name="recipient_id" class="form-control" th:field="*{recipient_id}" required>
                 <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.name}"></option>
             </select>
         </div>
         <div class="form-group">
             <label for="amount">Сумма:</label>
             <input type="number" class="form-control" id="amount" th:field="*{amount}">
+            <div th:if="${#fields.hasErrors('amount')}" class="text-danger">
+                <p th:each="err : ${#fields.errors('amount')}" th:text="${err}"></p>
+            </div>
         </div>
         <div class="form-group">
             <label for="message">Сообщение:</label>
