@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление/Изменение клиента</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container-fluid p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/clients">М-Банк</a>
+            <div class="collapse navbar-collapse">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="/clients">Все клиенты</a>
+                    <a class="nav-item nav-link active" href="/clients/new">Добавить нового клиента</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="container">
+    <h1 th:text="${client.id == null ? 'Карточка нового клиента' : 'Изменить карточку клиента'}"></h1>
+    <form th:action="@{${client.id == null ? '/clients' : '/clients/' + client.id}}" th:object="${client}"
+          method="post">
+        <div class="form-group">
+            <label for="name">Имя:</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}">
+            <div th:if="${#fields.hasErrors('name')}" class="text-danger">
+                <p th:each="err : ${#fields.errors('name')}" th:text="${err}"></p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phone_number">Телефонный номер:</label>
+            <input type="text" class="form-control" id="phone_number" th:field="*{phone_number}">
+            <div th:if="${#fields.hasErrors('phone_number')}" class="text-danger">
+                <p th:each="err : ${#fields.errors('phone_number')}" th:text="${err}"></p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="balance">Баланс:</label>
+            <input type="text" class="form-control" id="balance" th:field="*{balance}">
+            <div th:if="${#fields.hasErrors('balance')}" class="text-danger">
+                <p th:each="err : ${#fields.errors('balance')}" th:text="${err}"></p>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+</div>
+</body>
+</html>
