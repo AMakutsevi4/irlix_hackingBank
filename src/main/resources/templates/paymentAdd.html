@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Новый платёж</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container-fluid p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/clients">М-Банк</a>
+            <div class="collapse navbar-collapse">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="/clients">Все клиенты</a>
+                    <a class="nav-item nav-link active" href="/clients/new">Добавить нового клиента</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="container">
+    <h1>Новый платёж</h1>
+    <form th:action="@{/payments}" method="post" th:object="${payment}">
+        <div class="form-group">
+            <label for="senderId">Отправитель:</label>
+            <select id="senderId" name="sender_id" class="form-control" th:field="*{sender_id}" required>
+                <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="recipientId">Получатель:</label>
+            <select id="recipientId" name="recipient_id" class="form-control" th:field="*{recipient_id}" required>
+                <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="amount">Сумма:</label>
+            <input type="number" class="form-control" id="amount" th:field="*{amount}">
+            <div th:if="${#fields.hasErrors('amount')}" class="text-danger">
+                <p th:each="err : ${#fields.errors('amount')}" th:text="${err}"></p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="message">Сообщение:</label>
+            <input type="text" class="form-control" id="message" th:field="*{message}">
+        </div>
+        <button type="submit" class="btn btn-primary">Применить</button>
+    </form>
+</div>
+</body>
+</html>
